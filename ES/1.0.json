@@ -1,8 +1,8 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$id": "https://raw.githubusercontent.com/techjb/Open-Real-Estate-Listing-Schema/master/1.0.schema.json",
-  "title": "Open Real Estate Listing Schema",
-  "description": "Open schema for publishing real estate advertisements",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/techjb/Open-Real-Estate-Advertising-Schema/blob/master/ES/1.0.json",
+  "title": "Open Real Estate Advertising Schema",
+  "description": "Schema for publishing real estate advertisements in Spain",
   "type": "object",
   "properties": {
     "schemaVersion": {
@@ -29,15 +29,36 @@
             "description": "Globally Unique Identifier",
             "type": "string"
           },
+          "listingStatus": {
+            "description": "Listing status",
+            "type": "string",
+            "enum": [
+              "published",
+              "unpublished"
+            ]
+          },
           "listingDate": {
-            "description": "Date of listing",
+            "description": "Date on which the advertisement was published",
             "type": "string",
             "format": "date-time"
           },
           "unlistingDate": {
-            "description": "Date of unlisting",
+            "description": "Date on which the advertisement has been unpublished",
             "type": "string",
             "format": "date-time"
+          },
+          "operation": {
+            "description": "Type of bussiness operation",
+            "type": "string",
+            "enum": [
+              "buy",
+              "sell",
+              "rent",
+              "holiday_rent",
+              "share",
+              "auction",
+              "transfer"
+            ]
           },
           "propertyType": {
             "description": "Type of property",
@@ -73,19 +94,6 @@
               "non_building"
             ]
           },
-          "operation": {
-            "description": "Type of operation",
-            "type": "string",
-            "enum": [
-              "buy",
-              "sell",
-              "rent",
-              "holiday_rent",
-              "share",
-              "auction",
-              "transfer"
-            ]
-          },
           "media": {
             "description": "Media resources urls",
             "type": "array",
@@ -99,7 +107,7 @@
                 },
                 "title": {
                   "description": "Title of the media",
-                  "$ref": "#/definitions/descriptions"
+                  "type": "string"
                 },
                 "url": {
                   "description": "Url of media",
@@ -110,12 +118,12 @@
             }
           },
           "price": {
-            "$ref": "#/definitions/price",
-            "description": "Property price"
+            "description": "Property price in €",
+            "type": "number"
           },
-          "descriptions": {
-            "$ref": "#/definitions/descriptions",
-            "description": "Property descriptions"
+          "description": {
+            "description": "Description of the property",
+            "type": "string"
           },
           "dataSourceName": {
             "description": "Data source name",
@@ -198,48 +206,31 @@
           },
           "latitude": {
             "description": "Property location latitude in decimal degrees",
-            "type": "number"
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
           },
           "longitude": {
             "description": "Property location longitude in decimal degrees",
-            "type": "number"
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
           },
           "locationIsAccurate": {
             "description": "true if the latitude and longitude corresponds to the exact location of the property",
             "type": "boolean"
           },
-          "geography": {
-            "description": "Geography of the parcel or building in GeoJSON format",
-            "type": "object"
-          },
-          "localIds": {
-            "description": "Property identifiers in public entities (land registry, cadastre, etc.)",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "description": "Name of identifier, for example: Cadastral Reference, Land Registry Number.",
-                  "type": "string"
-                },
-                "ids": {
-                  "description": "List of ids",
-                  "type": "array",
-                  "items": {
-                    "description": "Id in public entity",
-                    "type": "string"
-                  }
-                }
-              }
-            }
+          "cadastralReference": {
+            "description": "Cadastral reference",
+            "type": "string"
           },
           "propertySize": {
-            "$ref": "#/definitions/size",
-            "description": "Size of property"
+            "description": "Built-up area of the property in square metres",
+            "type": "number"
           },
           "landSize": {
-            "$ref": "#/definitions/size",
-            "description": "Size of land"
+            "description": "Size of land in square meters",
+            "type": "number"
           },
           "constructionYear": {
             "description": "Year of construction",
@@ -263,8 +254,8 @@
             "description": "Property floor number",
             "type": "string"
           },
-          "rooms": {
-            "description": "Number of rooms",
+          "bedrooms": {
+            "description": "Number of bedrooms",
             "type": "integer"
           },
           "bathrooms": {
@@ -288,7 +279,7 @@
                 "pool",
                 "lift",
                 "disabled_access",
-                "box_room",
+                "storage_room",
                 "furnished",
                 "non_furnished",
                 "heating",
@@ -298,59 +289,10 @@
               ]
             }
           }
-        }
+        },
+        "required": [ "listingStatus", "operation", "propertyType" ]
       }
     }
   },
-  "definitions": {
-    "descriptions": {
-      "description": "List of descriptions",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "language": {
-            "description": "ISO 639-1 language code",
-            "type": "string"
-          },
-          "text": {
-            "default": "Description text",
-            "type": "string"
-          }
-        }
-      }
-    },
-    "size": {
-      "description": "Size definition",
-      "type": "object",
-      "properties": {
-        "value": {
-          "description": "Size value",
-          "type": "number"
-        },
-        "unit": {
-          "default": "Size unit",
-          "type": "string"
-        }
-      }
-    },
-    "price": {
-      "description": "Price",
-      "type": "object",
-      "properties": {
-        "value": {
-          "description": "Price value",
-          "type": "number"
-        },
-        "currency": {
-          "description": "ISO 4217 or cryptocurrency code",
-          "type": "string"
-        },
-        "formated": {
-          "description": "Price formated",
-          "type": "string"
-        }
-      }
-    }
-  }
+  "required": [ "schemaVersion", "updated" ]
 }
