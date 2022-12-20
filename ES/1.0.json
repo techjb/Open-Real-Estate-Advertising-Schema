@@ -103,7 +103,7 @@
                 "type": {
                   "description": "Type of media",
                   "type": "string",
-                  "enum": [ "image", "thumbnail", "video", "audio", "floorplan", "text", "other" ]
+                  "enum": [ "image", "video", "floorplan", "other" ]
                 },
                 "title": {
                   "description": "Title of the media",
@@ -143,67 +143,31 @@
             "type": "string",
             "format": "uri"
           },
-          "contact": {
-            "description": "Listing contact information",
-            "type": "object",
-            "properties": {
-              "name": {
-                "description": "Contact name",
-                "type": "string"
-              },
-              "phone": {
-                "description": "Contact phone number",
-                "type": "string"
-              },
-              "email": {
-                "description": "Contact email address",
-                "type": "string"
-              },
-              "url": {
-                "description": "Contact url",
-                "type": "string",
-                "format": "uri"
-              },
-              "other": {
-                "description": "Contact other (Skype, Twitter, Facebook, etc.)",
-                "type": "string"
-              }
-            }
+          "contactName": {
+            "description": "Contact name",
+            "type": "string"
+          },
+          "contactPhone": {
+            "description": "Contact phone number",
+            "type": "string"
+          },
+          "contactEmail": {
+            "description": "Contact email address",
+            "type": "string"
+          },
+          "contactUrl": {
+            "description": "Contact url",
+            "type": "string",
+            "format": "uri"
+          },
+          "contactOther": {
+            "description": "Contact other (Skype, Twitter, Facebook, etc.)",
+            "type": "string"
           },
           "address": {
-            "description": "Property address information",
-            "type": "object",
-            "properties": {
-              "formated": {
-                "description": "Formated address",
-                "type": "string"
-              },
-              "street": {
-                "description": "Street name, house number, floor, appartment",
-                "type": "string"
-              },
-              "district": {
-                "description": "District name",
-                "type": "string"
-              },
-              "postalCode": {
-                "description": "Zip / Postal code",
-                "type": "string"
-              },
-              "city": {
-                "description": "City / Town / Village / Locality",
-                "type": "string"
-              },
-              "province": {
-                "description": "State / Province / County / Region",
-                "type": "string"
-              },
-              "country": {
-                "description": "ISO 3166 country code",
-                "type": "string"
-              }
-            }
-          },
+            "description": "Formated address of the property",
+            "type": "string"
+          },         
           "latitude": {
             "description": "Property location latitude in decimal degrees",
             "type": "number",
