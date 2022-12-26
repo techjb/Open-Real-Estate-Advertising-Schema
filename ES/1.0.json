@@ -118,7 +118,7 @@
             }
           },
           "price": {
-            "description": "Property price in €",
+            "description": "Property price in ï¿½",
             "type": "number"
           },
           "description": {
